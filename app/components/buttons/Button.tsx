@@ -9,6 +9,7 @@ interface ButtonProps {
   large?: boolean;
   color?: string;
   disabled?: boolean;
+  full?: boolean;
   icon?: IconType;
 }
 
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   color = "Blue",
   large = false,
   disabled,
+  full,
   icon: Icon,
 }) => {
   const btnColor =
@@ -33,15 +35,15 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       className={`${
-        large ? "pt-4 pb-3 px-6" : "p-2"
+        large ? "pt-4 pb-3 px-6" : "p-4"
       } flex items-center justify-center rounded-lg border-2 border-ptgGrey  ${
         color && btnColor
-      } transition hover:bg-ptgOrange leading-none text-center disabled:opacity-70 disabled:cursor-not-allowed disabled:select-none`}
+      } relative transition hover:bg-ptgOrange leading-none text-center disabled:opacity-70 disabled:cursor-not-allowed disabled:select-none ${full && "w-full"}`}
       onClick={onClick}
       disabled={disabled}
     >
-      <span>{Icon && <Icon size={18} className="" />}</span>
-      <span className="my-auto">{value}</span>
+      <span className="absolute left-4">{Icon && <Icon size={18} className="" />}</span>
+      <span className="my-auto font-bold">{value}</span>
     </button>
   );
 };

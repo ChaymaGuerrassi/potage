@@ -4,6 +4,8 @@ import Navbar from './components/navbar/Navbar'
 import {League_Spartan } from 'next/font/google'
 import Modal from './components/modals/Modal';
 import RegisterModal from './components/modals/RegisterModal';
+import LoginModal from './components/modals/LoginModal';
+import ToasterProvider from './providers/ToasterProvider';
 
 
 const font = League_Spartan({ subsets: ['latin'] })
@@ -21,8 +23,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={font.className + ' bg-hero-pattern text-ptgGrey'}>
+        <ToasterProvider />
         <RegisterModal />
-        {/* <Modal isOpen title='Hello' actionLabel='Delete' secondaryActionLabel='Save'/> */}
+        <LoginModal />
         <Navbar />
         {children}
       </body>

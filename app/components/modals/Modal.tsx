@@ -150,6 +150,7 @@ const Modal: React.FC<ModalProps> = ({
                     disabled={disabled}
                     onClick={handleSubmit}
                     color="Green"
+                    full={true}
                   />
                   {secondaryActionLabel && (
                     <Button
@@ -157,9 +158,11 @@ const Modal: React.FC<ModalProps> = ({
                       disabled={disabled}
                       onClick={handleSecondaryAction}
                       color="Green"
+                      full={true}
                     />
                   )}
                 </div>
+                {footer}
               </div>
             </div>
           </div>

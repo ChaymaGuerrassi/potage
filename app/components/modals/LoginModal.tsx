@@ -4,15 +4,15 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useRegisterModal";
 import Modal from "./Modal";
 import Heading from "@/app/components/Heading";
 import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/buttons/Button";
 import { toast } from "react-hot-toast";
 
-const RegisterModal = () => {
-  const registerModal = useRegisterModal();
+const LoginModal = () => {
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -33,7 +33,7 @@ const RegisterModal = () => {
     axios
       .post("/api/register", data)
       .then((res) => {
-        registerModal.onClose();
+        loginModal.onClose();
       })
       .catch((err) => {
         setIsLoading(false);
@@ -119,7 +119,7 @@ const RegisterModal = () => {
           <div>Already have an account ?</div>
           <div
             className="cursor-pointer hover:underline font-semibold"
-            onClick={registerModal.onClose}
+            onClick={loginModal.onClose}
           >
             Login
           </div>
@@ -131,10 +131,10 @@ const RegisterModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Register"
+      isOpen={loginModal.isOpen}
+      title="Login"
       actionLabel="Continue"
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
@@ -142,4 +142,4 @@ const RegisterModal = () => {
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
