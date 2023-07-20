@@ -1,19 +1,24 @@
 "use client";
 
 import axios from "axios";
-import { useCallback, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import Modal from "./Modal";
 import Heading from "@/app/components/Heading";
 import Input from "@/app/components/inputs/Input";
-import Button from "@/app/components/buttons/Button";
 import { toast } from "react-hot-toast";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = () => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  };
 
   const {
     register,
@@ -46,10 +51,10 @@ const RegisterModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to ça potage" subtitle="Create an account" />
+      <Heading title="Bienvenue sur ça potage" subtitle="Créer un compte" />
       <Input
         id="email"
-        label="Email"
+        label="E-mail"
         type="email"
         disabled={isLoading}
         register={register}
@@ -58,7 +63,7 @@ const RegisterModal = () => {
       />
       <Input
         id="name"
-        label="Name"
+        label="Nom"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -66,17 +71,19 @@ const RegisterModal = () => {
       />
       <Input
         id="password"
-        label="Password"
+        label="Mot de passe"
         type="password"
         disabled={isLoading}
         register={register}
         errors={errors}
         required
       />
-      <div className="flex items-center justify-center">
+      <div className="font-semibold text-xl mt-6 ">Vous êtes ?</div>
+
+      <div className="flex items-center flex-wrap gap-5 mt-4">
         <Input
           id="userType"
-          label="Seller"
+          label="Jardinier"
           type="radio"
           value="SELLER"
           disabled={isLoading}
@@ -86,7 +93,17 @@ const RegisterModal = () => {
         />
         <Input
           id="userType"
-          label="Buyer"
+          label="Acheteur"
+          type="radio"
+          value="BUYER"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <Input
+          id="userType"
+          label="Les deux"
           type="radio"
           value="BUYER"
           disabled={isLoading}
@@ -101,12 +118,6 @@ const RegisterModal = () => {
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <Button
-        value="Continue with Google"
-        icon={FcGoogle}
-        onClick={() => {}}
-        color="ptgBlue"
-      />
       <div
         className="
         text-center
@@ -116,12 +127,12 @@ const RegisterModal = () => {
       "
       >
         <div className="flex flex-row items-center justify-center gap-2">
-          <div>Already have an account ?</div>
+          <div>Déjà inscrit ?</div>
           <div
             className="cursor-pointer hover:underline font-semibold"
-            onClick={registerModal.onClose}
+            onClick={handleLogin}
           >
-            Login
+            Se connecter
           </div>
         </div>
       </div>
@@ -132,8 +143,8 @@ const RegisterModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={registerModal.isOpen}
-      title="Register"
-      actionLabel="Continue"
+      title="Inscription"
+      actionLabel="S'inscrire"
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}

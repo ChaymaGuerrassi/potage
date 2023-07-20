@@ -49,7 +49,7 @@ const Input: React.FC<InputProps> = ({
         font-light
         bg-ptgBeige
         rounded-md 
-        border-2 
+        border-2
         border-ptgGrey 
         focus:outline-none 
         focus:border-ptgBlue 
@@ -59,6 +59,7 @@ const Input: React.FC<InputProps> = ({
         ${formatPrice ? "pl-9" : "pl-4"}
         ${errors[id] && "border-ptgRed"}
         ${errors[id] && "focus:border-ptgRed"}
+        ${type === "radio" && "ml-4 w-fit"}
         `}
       ></input>
       <label
@@ -76,7 +77,8 @@ const Input: React.FC<InputProps> = ({
         peer-placeholder-shown:scale-100
         peer-placeholder-shown:translate-y-0
         peer-focus:-translate-y-4
-        ${errors[id] ? "text-ptgRed" : "text-ptgGrey text-light"}
+        ${type === "radio" && "text-lg font-medium top-[7.5px]"}
+        ${errors[id] ? "text-ptgRed" : "text-ptgGrey"}
         `}
       >
         {label}

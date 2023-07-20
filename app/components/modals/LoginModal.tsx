@@ -1,55 +1,65 @@
 "use client";
 
-import axios from "axios";
-import { useCallback, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import useLoginModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 import Modal from "./Modal";
 import Heading from "@/app/components/Heading";
 import Input from "@/app/components/inputs/Input";
-import Button from "@/app/components/buttons/Button";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      userType: "",
     },
   });
 
+  const handleRegister = () => {
+    loginModal.onClose();
+    registerModal.onOpen();
+  };
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    axios
-      .post("/api/register", data)
-      .then((res) => {
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    })
+    .then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success("You are now logged in");
+        router.refresh();
         loginModal.onClose();
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        toast.error("An error occured, please try again later");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    })
+
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to ça potage" subtitle="Create an account" />
+      <Heading title="De retour sur Ça Potage" subtitle="Se connecter" />
       <Input
         id="email"
-        label="Email"
+        label="E-mail"
         type="email"
         disabled={isLoading}
         register={register}
@@ -57,56 +67,21 @@ const LoginModal = () => {
         required
       />
       <Input
-        id="name"
-        label="Name"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
         id="password"
-        label="Password"
+        label="Mot de passe"
         type="password"
         disabled={isLoading}
         register={register}
         errors={errors}
         required
       />
-      <div className="flex items-center justify-center">
-        <Input
-          id="userType"
-          label="Seller"
-          type="radio"
-          value="SELLER"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-        <Input
-          id="userType"
-          label="Buyer"
-          type="radio"
-          value="BUYER"
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-      </div>
     </div>
   );
 
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
       <hr />
-      <Button
-        value="Continue with Google"
-        icon={FcGoogle}
-        onClick={() => {}}
-        color="ptgBlue"
-      />
+      
       <div
         className="
         text-center
@@ -116,12 +91,12 @@ const LoginModal = () => {
       "
       >
         <div className="flex flex-row items-center justify-center gap-2">
-          <div>Already have an account ?</div>
+          <div>Première utilisation de Ça potage ?</div>
           <div
             className="cursor-pointer hover:underline font-semibold"
-            onClick={loginModal.onClose}
+            onClick={handleRegister}
           >
-            Login
+            S&#39;inscrire
           </div>
         </div>
       </div>
@@ -132,8 +107,8 @@ const LoginModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={loginModal.isOpen}
-      title="Login"
-      actionLabel="Continue"
+      title="Connexion"
+      actionLabel="Se connecter"
       onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}

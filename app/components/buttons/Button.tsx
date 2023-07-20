@@ -34,15 +34,19 @@ const Button: React.FC<ButtonProps> = ({
       : color === "Red" && "bg-ptgRed";
   return (
     <button
-      className={`${
-        large ? "pt-4 pb-3 px-6" : "p-4"
-      } flex items-center justify-center rounded-lg border-2 border-ptgGrey  ${
+      className={`${large ? "pt-4 pb-3 px-6" : "p-4"} ${
+        Icon && "pl-10"
+      } ${Icon && value === "" && 'p-3 '}flex items-center justify-center rounded-lg border-2 border-ptgGrey  ${
         color && btnColor
-      } relative transition hover:bg-ptgOrange leading-none text-center disabled:opacity-70 disabled:cursor-not-allowed disabled:select-none ${full && "w-full"}`}
+      } relative transition hover:opacity-70 leading-none text-center disabled:opacity-70 disabled:cursor-not-allowed disabled:select-none ${
+        full && "w-full"
+      }`}
       onClick={onClick}
       disabled={disabled}
     >
-      <span className="absolute left-4">{Icon && <Icon size={18} className="" />}</span>
+      <span className="absolute left-4">
+        {Icon && <Icon size={18} className="" />}
+      </span>
       <span className="my-auto font-bold">{value}</span>
     </button>
   );
