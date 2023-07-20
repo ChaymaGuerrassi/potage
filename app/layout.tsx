@@ -4,6 +4,7 @@ import Navbar from './components/navbar/Navbar'
 import {League_Spartan } from 'next/font/google'
 import RegisterModal from './components/modals/RegisterModal';
 import LoginModal from './components/modals/LoginModal';
+import AnnounceModal from './components/modals/AnnounceModal';
 import ToasterProvider from './providers/ToasterProvider';
 import getCurrentUser from './actions/getCurrentUser';
 
@@ -29,6 +30,7 @@ export default async function  RootLayout({
         <ToasterProvider />
         <LoginModal />
         <RegisterModal />
+        <AnnounceModal />
         <Navbar currentUser={currentUser}/>
         {children}
       </body>

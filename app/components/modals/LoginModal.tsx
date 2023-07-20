@@ -42,7 +42,7 @@ const LoginModal = () => {
       setIsLoading(false);
 
       if (callback?.ok) {
-        toast.success("You are now logged in");
+        toast.success("Vous êtes connecté !");
         router.refresh();
         loginModal.onClose();
       }

@@ -42,7 +42,7 @@ const RegisterModal = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-        toast.error("An error occured, please try again later");
+        toast.error("L'inscription a échoué. Veuillez réessayer.");
       })
       .finally(() => {
         setIsLoading(false);

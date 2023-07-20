@@ -3,9 +3,10 @@
 import Button from "../buttons/Button";
 import { GoPerson } from "react-icons/go";
 import { FaPlus } from "react-icons/fa";
-import { BsFillBasketFill } from "react-icons/bs";
+import { PiBasketDuotone } from "react-icons/pi";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import useAnnounceModal from "@/app/hooks/useAnnounceModal";
 import { User } from "@prisma/client";
 import ProfilPic from "../ProfilPic";
 
@@ -16,6 +17,7 @@ interface NavMenuProps {
 const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const announceModal = useAnnounceModal();
 
   const handleLogin = () => {
     loginModal.onOpen();
@@ -26,7 +28,6 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
       <ul className="gap-6 text-xl flex flex-col lg:flex-row items-center justify-center z-10">
         {currentUser && currentUser.userType === "SELLER" ? (
           <>
-
             <li className="cursor-pointer hover:underline">Mes annonces</li>
             <li className="flex gap-2 cursor-pointer hover:underline">
               demandes d&#39;achat
@@ -34,13 +35,13 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             <li>
               <Button
                 value="Créer une annonce"
-                onClick={registerModal.onOpen}
+                onClick={announceModal.onOpen}
                 icon={FaPlus}
                 color="Green"
                 large
               />
             </li>
-            <hr className="lg:hidden"/>
+            <hr className="lg:hidden" />
             <li>{currentUser.name && <ProfilPic name={currentUser.name} />}</li>
           </>
         ) : currentUser && currentUser.userType === "BUYER" ? (
@@ -52,7 +53,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
               <Button
                 value="Parcourir les annonces"
                 onClick={registerModal.onOpen}
-                icon={BsFillBasketFill}
+                icon={PiBasketDuotone}
                 color="Green"
                 large
               />
