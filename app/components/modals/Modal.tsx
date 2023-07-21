@@ -145,6 +145,15 @@ const Modal: React.FC<ModalProps> = ({
                     "
               >
                 <div className="flex flex-row items-center justify-end gap-4 w-full">
+                  {secondaryActionLabel && (
+                    <Button
+                      value={secondaryActionLabel}
+                      disabled={disabled}
+                      onClick={handleSecondaryAction}
+                      color="Beige"
+                      full={true}
+                    />
+                  )}
                   <Button
                     value={actionLabel}
                     disabled={disabled}
@@ -152,15 +161,6 @@ const Modal: React.FC<ModalProps> = ({
                     color="Green"
                     full={true}
                   />
-                  {secondaryActionLabel && (
-                    <Button
-                      value={secondaryActionLabel}
-                      disabled={disabled}
-                      onClick={handleSecondaryAction}
-                      color="Green"
-                      full={true}
-                    />
-                  )}
                 </div>
                 {footer}
               </div>

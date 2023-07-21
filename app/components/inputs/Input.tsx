@@ -31,7 +31,7 @@ const Input: React.FC<InputProps> = ({
       {formatPrice && (
         <BsCurrencyEuro
           size={20}
-          className="absolute top-1/2 left-3 transform -translate-y-1/2 text-ptgGrey"
+          className="absolute top-1/2 right-3 transform -translate-y-1/2 text-ptgGrey"
         />
       )}
       <input
@@ -56,7 +56,7 @@ const Input: React.FC<InputProps> = ({
         transition disabled:opacity-70 
         disabled:cursor-not-allowed 
         disabled:select-none
-        ${formatPrice ? "pl-9" : "pl-4"}
+        ${formatPrice ? "pr-9" : "pr-4"}
         ${errors[id] && "border-ptgRed"}
         ${errors[id] && "focus:border-ptgRed"}
         ${type === "radio" && "ml-4 w-fit"}
@@ -73,7 +73,7 @@ const Input: React.FC<InputProps> = ({
         top-5
         z-10
         origin-[0]
-        ${formatPrice ? "left-9" : "left-4"}
+        left-4
         peer-placeholder-shown:scale-100
         peer-placeholder-shown:translate-y-0
         peer-focus:-translate-y-4

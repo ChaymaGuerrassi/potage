@@ -9,6 +9,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import useAnnounceModal from "@/app/hooks/useAnnounceModal";
 import { User } from "@prisma/client";
 import ProfilPic from "../ProfilPic";
+import { useRouter } from "next/navigation";
 
 interface NavMenuProps {
   currentUser?: User | null;
@@ -18,6 +19,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const announceModal = useAnnounceModal();
+  const router = useRouter();
 
   const handleLogin = () => {
     loginModal.onOpen();
@@ -28,7 +30,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
       <ul className="gap-6 text-xl flex flex-col lg:flex-row items-center justify-center z-10">
         {currentUser && currentUser.userType === "SELLER" ? (
           <>
-            <li className="cursor-pointer hover:underline">Mes annonces</li>
+            <li className="cursor-pointer hover:underline" onClick={() => router.push("/annonces")}>Mes annonces</li>
             <li className="flex gap-2 cursor-pointer hover:underline">
               demandes d&#39;achat
             </li>

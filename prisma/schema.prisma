@@ -16,10 +16,10 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
-  userType       UserType @default(BUYER)
+  userType       UserType  @default(BUYER)
 
   // Relationships
-  sellerItems   SellerItem[]
+  sellerItems   Announce[]
   buyerRequests BuyerRequest[]
   accounts      Account[]
 }
@@ -30,19 +30,19 @@ enum UserType {
   SELLER
 }
 
-model SellerItem {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  imageSrc    String
-  createdAt   DateTime @default(now())
-  category    String
-  price       Int
-  sellerId    String   @db.ObjectId
-  isApproved  Boolean  @default(false) // For admin approval if required
-
-  // New field to indicate the type of farm item (e.g., eggs, meat, vegetables, fruits, etc.)
-  farmItemType FarmItemType
+model Announce {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  imageSrc      String
+  locationValue String
+  createdAt     DateTime     @default(now())
+  category      FarmItemType
+  price         Int
+  itemWeight    Int
+  itemUnit      Int
+  sellerId      String       @db.ObjectId
+  isApproved    Boolean?     @default(false)
 
   seller        User           @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   // Relationship to BuyerRequest for the purchase requests on this item
@@ -54,8 +54,12 @@ enum FarmItemType {
   EGGS
   MEAT
   VEGETABLES
+  FLOWERS
+  HERBS
   FRUITS
-  CHEESE
+  HONEY
+  DAIRY
+  OTHER
 }
 
 model BuyerRequest {
@@ -67,22 +71,22 @@ model BuyerRequest {
   createdAt    DateTime @default(now())
 
   buyer      User       @relation(fields: [buyerId], references: [id], onDelete: Cascade)
-  sellerItem SellerItem @relation(fields: [sellerItemId], references: [id], onDelete: Cascade)
+  sellerItem Announce @relation(fields: [sellerItemId], references: [id], onDelete: Cascade)
 }
 
 model Account {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String   @db.ObjectId
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.String
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
