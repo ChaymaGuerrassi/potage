@@ -8,7 +8,7 @@ export default function Home() {
   const registerModal = useRegisterModal();
 
   return (
-    <main className="flex p-9 md:py-12 md:px-24">
+    <main className=" p-9 md:py-12 md:px-24">
       <section className="w-full flex flex-col md:flex-row min-h-[87vh] md:min-h-[70vh] items-start md:items-center">
         <div className="w-full flex flex-col gap-4">
           <h1 className={"font-extrabold lg:text-8xl md:text-6xl text-5xl"}>

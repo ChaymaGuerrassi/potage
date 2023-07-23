@@ -1,37 +1,35 @@
 import prisma from "@/app/libs/prismadb";
 
 interface IParams {
-    announceId?: string;
-    buyerId?: string;
-    sellerId?: string;
+  announceId?: string;
+  buyerId?: string;
 }
 
-export default async function getBuyerRequests({ announceId, buyerId, sellerId }: IParams) {
-    const query: any = {};
+export default async function getBuyerRequests({
+  announceId,
+  buyerId,
+}: IParams) {
+  const query: any = {};
 
-    if (announceId) {
-        query.sellerItemId = announceId;
-    }
+  if (announceId) {
+    query.sellerItemId = announceId;
+  }
 
-    if (buyerId) {
-        query.buyerId = buyerId;
-    }
+  if (buyerId) {
+    query.buyerId = buyerId;
+  }
 
-    if (sellerId) {
-        query.sellerId = sellerId;
-    }
+  const buyerRequests = await prisma.buyerRequest.findMany({
+    where: query,
+    include: {
+      sellerItem: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
-    const buyerRequests = await prisma.buyerRequest.findMany({
-        where: query,
-        include: {
-            sellerItem: true,
-        },
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
+  console.log(buyerRequests);
 
-    console.log(buyerRequests);
-
-    return buyerRequests;
+  return buyerRequests;
 }

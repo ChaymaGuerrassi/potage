@@ -15,14 +15,14 @@ const ProfilPic: React.FC<ProfilPicProps> = ({ name, showMenu }) => {
         className="rounded-full border-2 w-[52px] h-[52px] border-ptgGrey leading-none bg-slate-300 flex items-center justify-center relative cursor-pointer"
         onClick={() => setProfilMenu(!profilMenu)}
       >
-        <p>
-          {name.split(" ")[0][0]} {name.split(" ")[1] && name.split(" ")[1][0]}
+        <p className="font-bold">
+          {name.split(" ")[0][0]}{name.split(" ")[1] && name.split(" ")[1][0]}
         </p>
 
         {showMenu && profilMenu && (
-          <div className="absolute top-2 right-2 mt-12 w-[200px] bg-ptgBeige rounded-md shadow-lg hidden lg:block">
+          <div className="absolute top-2 right-2 mt-12 w-[200px] bg-ptgBeige rounded-md shadow-lg hidden lg:block border-2 border-ptgGrey">
             <ul className="flex flex-col">
-              <li className="p-4  hover:underline">Profile</li>
+              <li className="p-4  hover:underline" >Profile</li>
               <li
                 className="p-4  hover:underline text-ptgRed"
                 onClick={() =>

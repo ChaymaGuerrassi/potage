@@ -62,6 +62,7 @@ const ListingPreview: React.FC<ListingPreviewProps> = ({
           imageSrc={data.imageSrc}
           category={data.category}
           description={data.description}
+          createdAt={data.createdAt}
           locationValue={data.locationValue}
           price={data.price}
           itemWeight={data.itemWeight}

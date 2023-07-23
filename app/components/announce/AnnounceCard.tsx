@@ -12,6 +12,7 @@ import {
   PiTrashSimpleDuotone,
   PiMessengerLogoDuotone,
   PiPencilSimpleDuotone,
+  PiCheckFatDuotone,
 } from "react-icons/pi";
 
 interface AnnounceCardProps {
@@ -24,6 +25,7 @@ interface AnnounceCardProps {
   secondaryActionLabel?: string;
   announceType: string;
   actionId?: string;
+  sellerSide?: boolean;
   currentUser?: User;
 }
 
@@ -35,6 +37,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
   onSecondaryAction,
   disabled,
   actionLabel,
+  sellerSide,
   secondaryActionLabel,
   actionId = "",
   currentUser,
@@ -136,7 +139,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
               icon={
                 announceType === "offer"
                   ? PiMessengerLogoDuotone
-                  : PiPencilSimpleDuotone
+                  : sellerSide ? PiCheckFatDuotone : PiPencilSimpleDuotone
               }
               onClick={handleSecondaryAction}
             />

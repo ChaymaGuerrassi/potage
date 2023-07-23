@@ -40,8 +40,10 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             >
               Mes annonces
             </li>
-            <li className="flex gap-2 cursor-pointer hover:underline">
-              demandes d&#39;achat
+            <li className={`cursor-pointer hover:underline ${
+                pathname === "/demandes-dachat-recues" && "underline text-ptgBrown"
+              }`} onClick={() => router.push("/demandes-dachat-recues")}>
+              demandes d&#39;achat reçues
             </li>
             <li>
               <Button
@@ -61,7 +63,9 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
           </>
         ) : currentUser && currentUser.userType === "BUYER" ? (
           <>
-            <li className="flex gap-2 cursor-pointer hover:underline" onClick={() => router.push("/mes-demandes-dachat")}>
+            <li className={`cursor-pointer hover:underline ${
+                pathname === "/mes-demandes-dachat" && "underline text-ptgBrown"
+              }`} onClick={() => router.push("/mes-demandes-dachat")}>
               Mes demandes d&#39;achat
             </li>
             <li>

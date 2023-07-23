@@ -5,7 +5,6 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User, BuyerRequest } from "@prisma/client";
-import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Heading from "./Heading";
 import AnnounceCard from "./announce/AnnounceCard";
@@ -13,18 +12,19 @@ import AnnounceCard from "./announce/AnnounceCard";
 interface BuyerRequestClientProps {
   buyerRequests: BuyerRequest[];
   currentUser?: User | null;
+  sellerSide?: boolean;
 }
 
 const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
   buyerRequests,
   currentUser,
+  sellerSide,
 }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const loginModal = useLoginModal();
-  
 
+  console.log(buyerRequests);
 
   const onDelete = useCallback(
     (id: string) => {
@@ -64,18 +64,14 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
         {buyerRequests.map((request: any) => (
           <AnnounceCard
             key={request.id}
-            actionLabel={
-              "Supprimer"
-            }
+            actionLabel={sellerSide ? "Voir" : "Supprimer"}
             onAction={onDelete}
-            secondaryActionLabel="Modifier l'annonce"
-            onSecondaryAction={() => console.log("edit")}
             announceType={"seller"}
-            disabled={
-              isLoading ||
-              deletingId === request.id 
-            }
+            disabled={isLoading || deletingId === request.id || sellerSide}
             actionId={request.id}
+            sellerSide={sellerSide}
+            secondaryActionLabel={""}
+            onSecondaryAction={() => {}}
             //@ts-ignore
             currentUser={currentUser}
             data={request.sellerItem}

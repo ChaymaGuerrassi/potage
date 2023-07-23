@@ -15,13 +15,13 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Missing credentials");
+          throw new Error("Entrez votre adresse email et votre mot de passe");
         }
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
         if (!user || !user.hashedPassword || !user.userType) {
-          throw new Error("Invalid credentials");
+          throw new Error("Adresse email ou mot de passe incorrect");
         }
 
         const isValid = await bcrypt.compare(
@@ -30,7 +30,7 @@ export const authOptions: AuthOptions = {
         );
 
         if (!isValid) {
-          throw new Error("Invalid credentials");
+          throw new Error("Adresse email ou mot de passe incorrect");
         }
 
         return user;

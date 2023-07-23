@@ -22,6 +22,7 @@ interface ListingHeadProps {
   imageSrc: string;
   id: string;
   seller: User;
+  createdAt: Date;
   price: number;
   itemWeight: number;
   itemUnit: number;
@@ -42,6 +43,7 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
   category,
   price,
   onAction,
+  createdAt,
   disabled,
   buyerRequests,
   itemWeight,
@@ -77,6 +79,8 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
       return currentUserRequest;
     }
   };
+
+  console.log(createdAt);
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:gap-6 lg:gap-8 ">
@@ -146,12 +150,15 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
                 name={seller.name}
               />
             )}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
               <p>
                 Mis en vente par{" "}
                 <span className="font-semibold">{seller.name}</span>
               </p>
-              <div className="flex items-center gap-2 ">
+              <p className="font-light text-gray-500">
+                Le {createdAt.getDate() + "/" + createdAt.getMonth() + "/" + createdAt.getFullYear()}
+              </p>
+              <div className="flex items-center gap-2 text-gray-500">
                 <PiMapPinDuotone size={18} className="text-ptgBlue" />
                 <p>
                   Produit situé à{" "}
