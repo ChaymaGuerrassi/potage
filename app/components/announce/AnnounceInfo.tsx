@@ -10,6 +10,7 @@ import {
   PiBasketDuotone,
   PiMessengerLogoDuotone,
   PiCheckCircleDuotone,
+  PiTrashSimpleDuotone,
 } from "react-icons/pi";
 import Button from "../buttons/Button";
 
@@ -26,6 +27,7 @@ interface ListingHeadProps {
   itemUnit: number;
   buyerRequests?: BuyerRequest[];
   onAction: (id: string) => void;
+  onDelete: (id: string) => void;
   disabled?: boolean;
   actionLabel?: string;
   actionId?: string;
@@ -139,7 +141,11 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
 
         <div>
           <div className="flex items-center gap-4">
-            {seller && <ProfilPic name={seller.name} />}
+            {seller && seller !== null && (
+              <ProfilPic //@ts-ignore
+                name={seller.name}
+              />
+            )}
             <div className="flex flex-col gap-4">
               <p>
                 Mis en vente par{" "}
@@ -156,9 +162,10 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
           </div>
           <hr className="my-8" />
 
-          {seller.id && (
+          {currentUser.id !== seller.id && (
             <div className="flex flex-col gap-4">
               <Button
+                // @ts-ignore
                 onClick={onAction}
                 disabled={disabled || getBuyerRequestStatus() !== "none"}
                 value={
@@ -179,6 +186,17 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
                 color="ptg"
                 value="Envoyer un message au vendeur"
                 icon={PiMessengerLogoDuotone}
+              />
+            </div>
+          )}
+          {currentUser.id === seller.id && (
+            <div className="flex flex-col gap-4">
+              <Button
+                onClick={() => {}}
+                disabled={disabled}
+                color="Red"
+                value="Supprimer l'annonce"
+                icon={PiTrashSimpleDuotone}
               />
             </div>
           )}

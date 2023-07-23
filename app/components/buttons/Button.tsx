@@ -38,7 +38,7 @@ const Button: React.FC<ButtonProps> = ({
         Icon && "pl-10"
       } ${Icon && value === "" && 'p-3 '}flex items-center justify-center rounded-lg border-2 border-ptgGrey  ${
         color && btnColor
-      } relative transition hover:opacity-70 leading-none text-center disabled:opacity-70 disabled:cursor-not-allowed disabled:select-none ${
+      } relative transition hover:opacity-80 leading-none text-center disabled:opacity-70 disabled:cursor-not-allowed disabled:select-none ${
         full && "w-full"
       }`}
       onClick={onClick}

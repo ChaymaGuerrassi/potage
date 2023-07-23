@@ -25,7 +25,11 @@ const ProfilPic: React.FC<ProfilPicProps> = ({ name, showMenu }) => {
               <li className="p-4  hover:underline">Profile</li>
               <li
                 className="p-4  hover:underline text-ptgRed"
-                onClick={() => signOut()}
+                onClick={() =>
+                  signOut({
+                    callbackUrl: `${window.location.origin}`,
+                  })
+                }
               >
                 Déconnexion
               </li>
@@ -36,7 +40,11 @@ const ProfilPic: React.FC<ProfilPicProps> = ({ name, showMenu }) => {
       {showMenu && (
         <p
           className="p-4 lg:hidden hover:underline text-ptgRed"
-          onClick={() => signOut()}
+          onClick={() =>
+            signOut({
+              callbackUrl: `${window.location.origin}`,
+            })
+          }
         >
           Déconnexion
         </p>

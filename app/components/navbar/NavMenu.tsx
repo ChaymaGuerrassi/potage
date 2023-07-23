@@ -27,13 +27,19 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
     loginModal.onOpen();
   };
 
-
   return (
     <>
       <ul className="gap-6 text-xl flex flex-col lg:flex-row items-center justify-center z-10">
         {currentUser && currentUser.userType === "SELLER" ? (
           <>
-            <li className={`cursor-pointer hover:underline ${pathname === "/annonces" && "underline text-ptgBrown"}`} onClick={() => router.push("/annonces")}>Mes annonces</li>
+            <li
+              className={`cursor-pointer hover:underline ${
+                pathname === "/mes-annonces" && "underline text-ptgBrown"
+              }`}
+              onClick={() => router.push("/mes-annonces")}
+            >
+              Mes annonces
+            </li>
             <li className="flex gap-2 cursor-pointer hover:underline">
               demandes d&#39;achat
             </li>
@@ -47,7 +53,11 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
               />
             </li>
             <hr className="lg:hidden" />
-            <li>{currentUser.name && <ProfilPic name={currentUser.name} showMenu/>}</li>
+            <li>
+              {currentUser.name && (
+                <ProfilPic name={currentUser.name} showMenu />
+              )}
+            </li>
           </>
         ) : currentUser && currentUser.userType === "BUYER" ? (
           <>
@@ -57,13 +67,17 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             <li>
               <Button
                 value="Parcourir les annonces"
-                onClick={registerModal.onOpen}
+                onClick={() => router.push("/annonces")}
                 icon={PiBasketDuotone}
                 color="Green"
                 large
               />
             </li>
-            <li>{currentUser.name && <ProfilPic name={currentUser.name} showMenu/>}</li>
+            <li>
+              {currentUser.name && (
+                <ProfilPic name={currentUser.name} showMenu />
+              )}
+            </li>
           </>
         ) : (
           <>
