@@ -7,6 +7,7 @@ import LoginModal from './components/modals/LoginModal';
 import AnnounceModal from './components/modals/AnnounceModal';
 import ToasterProvider from './providers/ToasterProvider';
 import getCurrentUser from './actions/getCurrentUser';
+import Footer from './components/Footer';
 
 
 const font = League_Spartan({ subsets: ['latin'] })
@@ -33,6 +34,7 @@ export default async function  RootLayout({
         <AnnounceModal />
         <Navbar currentUser={currentUser}/>
         {children}
+        <Footer/>
       </body>
     </html>
   )
