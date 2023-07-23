@@ -31,5 +31,7 @@ export default async function getBuyerRequests({ announceId, buyerId, sellerId }
         },
     });
 
+    console.log(buyerRequests);
+
     return buyerRequests;
 }

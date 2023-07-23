@@ -61,7 +61,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
           </>
         ) : currentUser && currentUser.userType === "BUYER" ? (
           <>
-            <li className="flex gap-2 cursor-pointer hover:underline">
+            <li className="flex gap-2 cursor-pointer hover:underline" onClick={() => router.push("/mes-demandes-dachat")}>
               Mes demandes d&#39;achat
             </li>
             <li>

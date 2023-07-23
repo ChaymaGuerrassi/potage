@@ -1,8 +1,9 @@
 import EmptyState from "@/app/components/EmptyState";
-import getAnnouncesByBuyer from "../actions/getAnnouncesByBuyer";
+import { useEffect } from "react";
+import getBuyerRequests from "../actions/getBuyerRequests";
 import getCurrentUser from "../actions/getCurrentUser";
 
-import AnnouncesClient from "../components/announce/AnnouncesClient";
+import BuyerRequestClient from "../components/BuyerRequestsClient";
 
 export default async function Home() {
   const currentUser = await getCurrentUser();
@@ -17,21 +18,21 @@ export default async function Home() {
     );
   }
 
-  const announces = await getAnnouncesByBuyer({ sellerId: currentUser.id });
+  const announces = await getBuyerRequests({ buyerId: currentUser.id });
 
   const isEmpty = announces.length === 0;
 
   if (isEmpty) {
     return (
       <EmptyState
-        title="Vous n'avez pas encore d'annonce ! "
-        subtitle="Mettez en ligne le fruit de votre jardinage"
+        title="Vous n'avez pas encore de demandes d'achat ! "
+        subtitle="Parcourez les annonces de jardiniers locaux"
         showReset
       />
     );
   }
 
   return (
-    <AnnouncesClient announces={announces} currentUser={currentUser} announceType="seller"/>
+    <BuyerRequestClient buyerRequests={announces} currentUser={currentUser} />
   );
 }
