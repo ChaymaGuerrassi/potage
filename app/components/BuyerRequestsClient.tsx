@@ -21,9 +21,9 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
 }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState("");
-  const [requestItemId, setRequestItemId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const loginModal = useLoginModal();
+  
 
 
   const onDelete = useCallback(
@@ -31,9 +31,9 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
       setDeletingId(id);
 
       axios
-        .delete(`/api/announce/${id}`)
+        .delete(`/api/buyerRequest/${id}`)
         .then(() => {
-          toast.success("Annonce supprimée avec succès");
+          toast.success("Demande d'achat supprimée avec succès");
           router.refresh();
         })
         .catch((error) => {
@@ -44,34 +44,6 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
         });
     },
     [router]
-  );
-
-  const onSendBuyerRequest = useCallback(
-    (id: string) => {
-      if (!currentUser) return loginModal.onOpen();
-
-      setIsLoading(true);
-      setRequestItemId(id);
-
-      axios
-        .post("/api/buyerRequest", {
-          sellerItemId: id,
-          buyerId: currentUser.id,
-        })
-        .then(() => {
-          toast.success("Votre demande a bien été envoyée");
-          router.refresh();
-        })
-        .catch((err) => {
-          toast.error("Une erreur est survenue");
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-          setRequestItemId("");
-        });
-    },
-    [currentUser, loginModal, router]
   );
 
   return (
