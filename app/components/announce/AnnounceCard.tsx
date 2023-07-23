@@ -79,6 +79,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
             relative 
             overflow-hidden 
             rounded-t-xl
+            basis-7/12
           "
         >
           <Image
@@ -112,9 +113,9 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
             {getCategoryLabelByValue(data.category)}
           </div>
         </div>
-        <div className="px-3">
+        <div className="flex flex-col p-3 basis-5/12">
           <div className="font-semibold text-lg">{data.title}</div>
-          <div className="text-base mt-2 h-[35%] max-h-[35%] text-ellipsis max-w-full overflow-hidden">
+          <div className="text-base mt-2 truncate max-w-full overflow-hidden">
             {data.description}
           </div>
           <div className="text-lg mt-2 flex gap-1 items-center">
@@ -125,36 +126,35 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
           <div className="flex flex-row items-center gap-1 mt-4">
             <div className="font-bold">{data.price} €</div>
           </div>
-        </div>
-
-        <div className="flex gap-2 p-3 pt-0">
-          {onSecondaryAction && secondaryActionLabel && (
-            <Button
-              disabled={disabled}
-              value=""
-              color=""
-              icon={
-                announceType === "offer"
-                  ? PiMessengerLogoDuotone
-                  : PiPencilSimpleDuotone
-              }
-              onClick={handleSecondaryAction}
-            />
-          )}
-          {onAction && actionLabel && (
-            <Button
-              disabled={disabled}
-              value={actionLabel}
-              color={announceType === "offer" ? "Blue" : "Red"}
-              full
-              icon={
-                announceType === "offer"
-                  ? PiBasketDuotone
-                  : PiTrashSimpleDuotone
-              }
-              onClick={handleAction}
-            />
-          )}
+          <div className="flex gap-2 mt-4">
+            {onSecondaryAction && secondaryActionLabel && (
+              <Button
+                disabled={disabled}
+                value=""
+                color=""
+                icon={
+                  announceType === "offer"
+                    ? PiMessengerLogoDuotone
+                    : PiPencilSimpleDuotone
+                }
+                onClick={handleSecondaryAction}
+              />
+            )}
+            {onAction && actionLabel && (
+              <Button
+                disabled={disabled}
+                value={actionLabel}
+                color={announceType === "offer" ? "Blue" : "Red"}
+                full
+                icon={
+                  announceType === "offer"
+                    ? PiBasketDuotone
+                    : PiTrashSimpleDuotone
+                }
+                onClick={handleAction}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
