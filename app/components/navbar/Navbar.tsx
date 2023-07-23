@@ -17,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   }, []);
 
   return (
-    <nav className="py-5 pr-7 md:py-8 md:pl-20 md:pr-24 font-bold flex justify-between items-center">
+    <nav className="py-5 pr-7 md:py-8 md:pl-20 md:pr-24 font-bold flex justify-between items-center border-b-2 border-ptgGrey">
       <a href="/">
         <Image
           width={200}
@@ -45,10 +45,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
             h-fit
             md:w-fit
             bg-ptgBeige
+            border-2
+            border-ptgGrey
             overflow-hidden 
             right-20
             top-20
             text-sm
+            z-10
             p-4
             pt-5
           "

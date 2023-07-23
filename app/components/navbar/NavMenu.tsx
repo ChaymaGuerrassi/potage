@@ -10,6 +10,7 @@ import useAnnounceModal from "@/app/hooks/useAnnounceModal";
 import { User } from "@prisma/client";
 import ProfilPic from "../ProfilPic";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface NavMenuProps {
   currentUser?: User | null;
@@ -20,17 +21,19 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
   const loginModal = useLoginModal();
   const announceModal = useAnnounceModal();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogin = () => {
     loginModal.onOpen();
   };
+
 
   return (
     <>
       <ul className="gap-6 text-xl flex flex-col lg:flex-row items-center justify-center z-10">
         {currentUser && currentUser.userType === "SELLER" ? (
           <>
-            <li className="cursor-pointer hover:underline" onClick={() => router.push("/annonces")}>Mes annonces</li>
+            <li className={`cursor-pointer hover:underline ${pathname === "/annonces" && "underline text-ptgBrown"}`} onClick={() => router.push("/annonces")}>Mes annonces</li>
             <li className="flex gap-2 cursor-pointer hover:underline">
               demandes d&#39;achat
             </li>
@@ -44,7 +47,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
               />
             </li>
             <hr className="lg:hidden" />
-            <li>{currentUser.name && <ProfilPic name={currentUser.name} />}</li>
+            <li>{currentUser.name && <ProfilPic name={currentUser.name} showMenu/>}</li>
           </>
         ) : currentUser && currentUser.userType === "BUYER" ? (
           <>
@@ -60,7 +63,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
                 large
               />
             </li>
-            <li>{currentUser.name && <ProfilPic name={currentUser.name} />}</li>
+            <li>{currentUser.name && <ProfilPic name={currentUser.name} showMenu/>}</li>
           </>
         ) : (
           <>

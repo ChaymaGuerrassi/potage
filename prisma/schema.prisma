@@ -66,7 +66,6 @@ model BuyerRequest {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   buyerId      String   @db.ObjectId
   sellerItemId String   @db.ObjectId
-  quantity     Int
   message      String?
   createdAt    DateTime @default(now())
 
