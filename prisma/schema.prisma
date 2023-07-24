@@ -28,6 +28,7 @@ model User {
 enum UserType {
   BUYER
   SELLER
+  BOTH
 }
 
 model Announce {
@@ -62,12 +63,20 @@ enum FarmItemType {
   OTHER
 }
 
+// Enum to define the status of a purchase request
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model BuyerRequest {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   buyerId      String   @db.ObjectId
   sellerItemId String   @db.ObjectId
   message      String?
   createdAt    DateTime @default(now())
+  status       RequestStatus @default(PENDING)
 
   buyer      User       @relation(fields: [buyerId], references: [id], onDelete: Cascade)
   sellerItem Announce @relation(fields: [sellerItemId], references: [id], onDelete: Cascade)

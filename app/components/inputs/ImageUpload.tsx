@@ -54,7 +54,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
             `}
           >
             <PiCameraPlusDuotone size={50} className="text-ptgBlue"/>
-            <div className="font-semibold text-lg">Click to upload</div>
+            <div className="font-semibold text-lg text-center">Cliquer pour télécharger</div>
             {value && value.length !== 0 && (
               <div
                 className="

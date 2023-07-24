@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { User, BuyerRequest } from "@prisma/client";
+import { User, BuyerRequest, RequestStatus} from "@prisma/client";
 
 import Heading from "./Heading";
 import AnnounceCard from "./announce/AnnounceCard";
@@ -24,7 +24,6 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
   const [deletingId, setDeletingId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(buyerRequests);
 
   const onDelete = useCallback(
     (id: string) => {
@@ -46,9 +45,32 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
     [router]
   );
 
+  const onUpdateStatus = useCallback((id: string, status: RequestStatus) => {
+    setIsLoading(true);
+
+    axios
+      .put(`/api/buyerRequest/${id}`, {
+        status,
+      })
+      .then(() => {
+        toast.success("Demande d'achat mise à jour avec succès");
+        router.refresh();
+      })
+      .catch((error) => {
+        toast.error(error?.response?.data?.error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [router]);
+  
+
+  const title = sellerSide ? "Mes demandes d'achat reçues" : "Mes demandes d'achat envoyées";
+  const subtitle = sellerSide ? "Retrouver les demandes d'achats de vos annonces" : "Retrouver les demandes d'achats que vous avez envoyées";
+
   return (
-    <main className="p-9 md:py-12 md:px-24">
-      <Heading title="Mes demandes d'achat" subtitle="Mes demandes d'achat" />
+    <main className="p-9 md:py-12 md:px-24 h-screen">
+      <Heading title={title} subtitle={subtitle} />
       <div
         className="
           mt-8
@@ -64,14 +86,16 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
         {buyerRequests.map((request: any) => (
           <AnnounceCard
             key={request.id}
-            actionLabel={sellerSide ? "Voir" : "Supprimer"}
-            onAction={onDelete}
-            announceType={"seller"}
-            disabled={isLoading || deletingId === request.id || sellerSide}
+            actionLabel={sellerSide ? "Accepter" : "Supprimer"}
+            //@ts-ignore
+            onAction={sellerSide? onUpdateStatus : onDelete}
+            disabled={isLoading || deletingId === request.id }
             actionId={request.id}
             sellerSide={sellerSide}
-            secondaryActionLabel={""}
-            onSecondaryAction={() => {}}
+            sellerSideStatus={request.status}
+            secondaryActionLabel={"Refuser"}
+            //@ts-ignore
+            onSecondaryAction={sellerSide ? onUpdateStatus : () => {}}
             //@ts-ignore
             currentUser={currentUser}
             data={request.sellerItem}

@@ -80,7 +80,6 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
     }
   };
 
-  console.log(createdAt);
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:gap-6 lg:gap-8 ">
@@ -147,7 +146,7 @@ const AnnounceInfo: React.FC<ListingHeadProps> = ({
           <div className="flex items-center gap-4">
             {seller && seller !== null && (
               <ProfilPic //@ts-ignore
-                name={seller.name}
+                currentUser={seller}
               />
             )}
             <div className="flex flex-col gap-1">

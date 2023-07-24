@@ -57,7 +57,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             <hr className="lg:hidden" />
             <li>
               {currentUser.name && (
-                <ProfilPic name={currentUser.name} showMenu />
+                <ProfilPic currentUser={currentUser} showMenu />
               )}
             </li>
           </>
@@ -79,7 +79,7 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             </li>
             <li>
               {currentUser.name && (
-                <ProfilPic name={currentUser.name} showMenu />
+                <ProfilPic currentUser={currentUser} showMenu />
               )}
             </li>
           </>

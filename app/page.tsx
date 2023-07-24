@@ -9,16 +9,25 @@ export default function Home() {
   const registerModal = useRegisterModal();
 
   let section2 = [
-    {icon : '#',
-     title: 'Rejoignez gratuitement',
-     content: 'C\'est payant de magasiner avec nous. Vous pouvez économiser jusqu\'à 1 200 $ chaque année sur des articles d\'épicerie de haute qualité.'},
-    {icon : '#',
-     title: 'Rejoignez gratuitement',
-     content: 'C\'est payant de magasiner avec nous. Vous pouvez économiser jusqu\'à 1 200 $ chaque année sur des articles d\'épicerie de haute qualité.'},
-    {icon : '#',
-     title: 'Rejoignez gratuitement',
-     content: 'C\'est payant de magasiner avec nous. Vous pouvez économiser jusqu\'à 1 200 $ chaque année sur des articles d\'épicerie de haute qualité.'}
-  ]
+    {
+      icon: "/assets/potage-illustration-1.svg",
+      title: "Rejoignez gratuitement",
+      content:
+        "Créer votre compte acheteur, vendeur ou les deux sur ça potage en toute simplicité.",
+    },
+    {
+      icon: "/assets/potage-illustration-2.svg",
+      title: "Shoppez ou vendez",
+      content:
+        "Créez vos annonces de produits frais, locaux et de saison en quelques clics. Vous pouvez aussi faire des demandes d'achat sur des annonces qui vous donnent envie.",
+    },
+    {
+      icon: "/assets/potage-illustration-3.svg",
+      title: "Et profitez !",
+      content:
+        "Les jardiniers locaux vous contactent pour vous proposer leurs produits. Vous pouvez ensuite discuter avec eux pour organiser la vente. et dégustez !",
+    },
+  ];
 
   return (
     <main className="p-9 md:py-12 md:px-24">
@@ -43,34 +52,48 @@ export default function Home() {
             <Button value="Découvrir !" onClick={registerModal.onOpen} />
           </div>
         </div>
-        <div className="bg-hero-bg w-full min-h-[520px] lg:min-h-[660px] bg-bottom md:bg-right-top bg-contain bg-no-repeat"></div>
+        <div className="bg-hero-bg w-full min-h-[520px] lg:min-h-[660px] bg-right-top bg-contain bg-no-repeat"></div>
       </section>
-      <section className="mb-20 lg:mb-28 flex justify-between items-center">
-        {section2.map(elem => {
-          return (
-              <div key={elem.title} className="flex items-start">
-                <img className="pr-5" width={30} height={30} src={elem.icon} alt={elem.icon} />
+      <section className="mb-20 lg:mb-28 flex justify-between items-center bg-ptgRed py-4  uppercase text-ptgBeige px-3 w-full flex-wrap">
+        <p className="font-bold text-2xl">viandes</p>
+        <p className="font-bold text-2xl">·</p>
+        <p className="font-bold text-2xl">miels</p>
+        <p className="font-bold text-2xl">·</p>
+        <p className="font-bold text-2xl">fleurs</p>
+        <p className="font-bold text-2xl">·</p>
+        <p className="font-bold text-2xl">fruits</p>
+        <p className="font-bold text-2xl">·</p>
+        <p className="font-bold text-2xl">légumes frais</p>
+        <p className="font-bold text-2xl">·</p>
+        <p className="font-bold text-2xl">oeufs</p>
+        <p className="font-bold text-2xl">·</p>
+        <p className="font-bold text-2xl">Produits laitiers</p>
+
+      </section>
+      <section className="mb-20 lg:mb-28 text-xl">
+        <h2 className="font-extrabold text-4xl lg:text-6xl text-center">
+          Comment ça marche ?
+        </h2>
+        <div className="flex flex-col lg:flex-row justify-between items-center mt-8 lg:mt-20 gap-4">
+          {section2.map((elem) => {
+            return (
+              <div key={elem.title} className="flex flex-col gap-3 items-center justify-center lg:items-start lg:w-1/3 text-center lg:text-left">
+                <Image
+                  className=""
+                  width={200}
+                  height={200}
+                  src={elem.icon}
+                  alt={elem.icon}
+                />
                 <div>
-                  <h3 className="mr-5 font-bold">{elem.title}</h3>
-                  <p className="mt-4">
-                    {elem.content}
-                  </p>
+                  <h3 className="font-bold text-2xl">{elem.title}</h3>
+                  <p className="lg:max-w-[70%] mt-6">{elem.content}</p>
                 </div>
               </div>
-          )
-        })}
+            );
+          })}
+        </div>
       </section>
-        <section className="mb-20 lg:mb-28 flex justify-between items-center">
-            <div>
-                <img src="#" alt="" width="" height="" className=""/>
-            </div>
-            <div>
-                <p className="text-3xl font-bold mb-8">Tous les aliments sont bons</p>
-                <p className="text-xl ">Les normes obsolètes des épiceries signifient que des aliments parfaitement
-                    nutritifs sont gaspillés, ce qui contribue au changement climatique. Nous préférons vous offrir une
-                    réduction sur des articles délicieux et amusants et donner à ces marginaux une nouvelle maison : la vôtre.</p>
-            </div>
-        </section>
     </main>
   );
 }

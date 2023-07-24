@@ -105,7 +105,7 @@ const RegisterModal = () => {
           id="userType"
           label="Les deux"
           type="radio"
-          value="BUYER"
+          value="BOTH"
           disabled={isLoading}
           register={register}
           errors={errors}

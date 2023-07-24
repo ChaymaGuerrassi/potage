@@ -109,7 +109,6 @@ const AnnounceModal = () => {
     if (step !== STEPS.IMAGES) {
       return handleNextStep();
     }
-    console.log(data);
     setIsLoading(true);
     axios
       .post("/api/announce", data)

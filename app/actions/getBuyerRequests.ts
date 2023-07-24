@@ -29,7 +29,6 @@ export default async function getBuyerRequests({
     },
   });
 
-  console.log(buyerRequests);
 
   return buyerRequests;
 }

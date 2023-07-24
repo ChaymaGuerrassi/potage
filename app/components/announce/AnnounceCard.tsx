@@ -3,8 +3,11 @@
 import { Announce, BuyerRequest, User, FarmItemType } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 import Image from "next/image";
 import Button from "../buttons/Button";
+import { RequestStatus } from "@prisma/client";
 import { categories } from "@/app/components/modals/AnnounceModal";
 import {
   PiMapPinDuotone,
@@ -13,19 +16,21 @@ import {
   PiMessengerLogoDuotone,
   PiPencilSimpleDuotone,
   PiCheckFatDuotone,
+  PiXCircleDuotone,
 } from "react-icons/pi";
 
 interface AnnounceCardProps {
   data: Announce;
   buyerRequest?: BuyerRequest;
-  onAction?: (id: string) => void;
-  onSecondaryAction?: (id: string) => void;
+  onAction?: (id: string, status?: RequestStatus) => void;
+  onSecondaryAction?: (id: string, status?: RequestStatus) => void;
   disabled?: boolean;
   actionLabel?: string;
   secondaryActionLabel?: string;
   announceType: string;
   actionId?: string;
   sellerSide?: boolean;
+  sellerSideStatus?: RequestStatus;
   currentUser?: User;
 }
 
@@ -38,20 +43,25 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
   disabled,
   actionLabel,
   sellerSide,
+  sellerSideStatus,
   secondaryActionLabel,
   actionId = "",
-  currentUser,
 }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleAction = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       if (disabled) return;
 
-      onAction && onAction(actionId);
+      if (sellerSide) {
+        onAction && onAction(actionId, "ACCEPTED");
+      } else {
+        onAction && onAction(actionId);
+      }
     },
-    [onAction, actionId, disabled]
+    [disabled, sellerSide, onAction, actionId]
   );
 
   const handleSecondaryAction = useCallback(
@@ -59,9 +69,13 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
       e.stopPropagation();
       if (disabled) return;
 
-      onSecondaryAction && onSecondaryAction(actionId);
+      if (sellerSide) {
+        onSecondaryAction && onSecondaryAction(actionId, "REJECTED");
+      } else {
+        onSecondaryAction && onSecondaryAction(actionId);
+      }
     },
-    [onSecondaryAction, actionId, disabled]
+    [onSecondaryAction, actionId, disabled, sellerSide]
   );
 
   const getCategoryLabelByValue = (value: FarmItemType) => {
@@ -130,33 +144,59 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
             <div className="font-bold">{data.price} €</div>
           </div>
           <div className="flex gap-2 mt-4">
-            {onSecondaryAction && secondaryActionLabel && (
-              <Button
-                disabled={disabled}
-                value=""
-                color=""
-                icon={
-                  announceType === "offer"
-                    ? PiMessengerLogoDuotone
-                    : PiPencilSimpleDuotone
-                }
-                onClick={handleSecondaryAction}
-              />
+            {sellerSideStatus !== "PENDING" && announceType !== "offer" && (
+              <div
+                className={`font-bold ${
+                  sellerSideStatus === "ACCEPTED"
+                    ? "text-ptgGreen"
+                    : "text-ptgRed"
+                }`}
+              >
+                {sellerSideStatus === "ACCEPTED" ? "Demande d'achat acceptée" : "Demande d'achat rejetée"}
+              </div>
             )}
-            {onAction && actionLabel && (
-              <Button
-                disabled={disabled}
-                value={actionLabel}
-                color={announceType === "offer" ? "Blue" : "Red"}
-                full
-                icon={
-                  announceType === "offer"
-                    ? PiBasketDuotone
-                    : PiTrashSimpleDuotone
-                }
-                onClick={handleAction}
-              />
-            )}
+            {(sellerSideStatus === "PENDING" || !sellerSideStatus) &&
+              onSecondaryAction &&
+              secondaryActionLabel && (
+                <Button
+                  disabled={disabled}
+                  value={sellerSide ? secondaryActionLabel : ""}
+                  color={sellerSide ? "Red" : ""}
+                  icon={
+                    announceType === "offer"
+                      ? PiMessengerLogoDuotone
+                      : sellerSide
+                      ? PiXCircleDuotone
+                      : PiPencilSimpleDuotone
+                  }
+                  full={sellerSide}
+                  onClick={handleSecondaryAction}
+                />
+              )}
+            {(sellerSideStatus === "PENDING" || !sellerSideStatus) &&
+              onAction &&
+              actionLabel && (
+                <Button
+                  disabled={disabled}
+                  value={actionLabel}
+                  color={
+                    announceType === "offer"
+                      ? "Blue"
+                      : sellerSide
+                      ? "Green"
+                      : "Red"
+                  }
+                  full
+                  icon={
+                    announceType === "offer"
+                      ? PiBasketDuotone
+                      : sellerSide
+                      ? PiCheckFatDuotone
+                      : PiTrashSimpleDuotone
+                  }
+                  onClick={handleAction}
+                />
+              )}
           </div>
         </div>
       </div>
