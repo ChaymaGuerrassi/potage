@@ -40,9 +40,13 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
             >
               Mes annonces
             </li>
-            <li className={`cursor-pointer hover:underline ${
-                pathname === "/demandes-dachat-recues" && "underline text-ptgBrown"
-              }`} onClick={() => router.push("/demandes-dachat-recues")}>
+            <li
+              className={`cursor-pointer hover:underline ${
+                pathname === "/demandes-dachat-recues" &&
+                "underline text-ptgBrown"
+              }`}
+              onClick={() => router.push("/demandes-dachat-recues")}
+            >
               demandes d&#39;achat reçues
             </li>
             <li>
@@ -63,10 +67,64 @@ const NavMenu: React.FC<NavMenuProps> = ({ currentUser }) => {
           </>
         ) : currentUser && currentUser.userType === "BUYER" ? (
           <>
-            <li className={`cursor-pointer hover:underline ${
+            <li
+              className={`cursor-pointer hover:underline ${
                 pathname === "/mes-demandes-dachat" && "underline text-ptgBrown"
-              }`} onClick={() => router.push("/mes-demandes-dachat")}>
+              }`}
+              onClick={() => router.push("/mes-demandes-dachat")}
+            >
               Mes demandes d&#39;achat
+            </li>
+            <li>
+              <Button
+                value="Parcourir les annonces"
+                onClick={() => router.push("/annonces")}
+                icon={PiBasketDuotone}
+                color="Green"
+                large
+              />
+            </li>
+            <li>
+              <Button
+                value="Créer une annonce"
+                onClick={announceModal.onOpen}
+                icon={FaPlus}
+                color="Green"
+                large
+              />
+            </li>
+            <li>
+              {currentUser.name && (
+                <ProfilPic currentUser={currentUser} showMenu />
+              )}
+            </li>
+          </>
+        ) : currentUser && currentUser.userType === "BOTH" ? (
+          <>
+            <li
+              className={`cursor-pointer hover:underline ${
+                pathname === "/mes-demandes-dachat" && "underline text-ptgBrown"
+              }`}
+              onClick={() => router.push("/mes-demandes-dachat")}
+            >
+              Mes demandes d&#39;achat
+            </li>
+            <li
+              className={`cursor-pointer hover:underline ${
+                pathname === "/mes-annonces" && "underline text-ptgBrown"
+              }`}
+              onClick={() => router.push("/mes-annonces")}
+            >
+              Mes annonces
+            </li>
+            <li
+              className={`cursor-pointer hover:underline ${
+                pathname === "/demandes-dachat-recues" &&
+                "underline text-ptgBrown"
+              }`}
+              onClick={() => router.push("/demandes-dachat-recues")}
+            >
+              demandes d&#39;achat reçues
             </li>
             <li>
               <Button

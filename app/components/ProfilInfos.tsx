@@ -74,12 +74,16 @@ const ProfilInfos: React.FC<ProfilInfosProps> = ({ user, currentUser }) => {
 
   const image = watch("image");
 
+
+  const title = currentUser && currentUser.id === user.id ? "Mon profil" : "Profil";
+  const subtitle = currentUser && currentUser.id === user.id ? "Retrouver vos informations personnelles" : "Retrouver les informations personnelles du vendeur";
+
   return (
     <main className="p-9 md:py-12 md:px-24 h-screen">
-      <div className="flex justify-between">
+      <div className="flex flex-col md:flex-row justify-between">
         <Heading
-          title="Mes informations"
-          subtitle="Retrouver vos informations personnelles"
+          title={title}
+          subtitle={subtitle}
         />
         {currentUser && currentUser.id === user.id && !editMode && (
           <Button
@@ -133,7 +137,7 @@ const ProfilInfos: React.FC<ProfilInfosProps> = ({ user, currentUser }) => {
         </>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="mt-12">
-          <div className="flex w-full gap-8">
+          <div className="flex w-full flex-col md:flex-row gap-8">
             <ImageUpload
               value={image}
               onChange={(value) => setCustomValue("image", value)}

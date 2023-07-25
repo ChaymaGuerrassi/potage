@@ -13,6 +13,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'hero-pattern': "url('/assets/hero-pattern.svg')",
         'hero-bg': "url('/assets/hero-bg.svg'),url('/assets/hero-blob.svg')",
+        'footer-bg': "url('/assets/footer-bg.svg')",
       },
       colors: {
         'ptgBeige': {

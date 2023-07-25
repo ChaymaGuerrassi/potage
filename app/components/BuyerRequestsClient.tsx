@@ -69,7 +69,7 @@ const BuyerRequestClient: React.FC<BuyerRequestClientProps> = ({
   const subtitle = sellerSide ? "Retrouver les demandes d'achats de vos annonces" : "Retrouver les demandes d'achats que vous avez envoyées";
 
   return (
-    <main className="p-9 md:py-12 md:px-24 h-screen">
+    <main className="p-9 md:py-12 md:px-24 h-full">
       <Heading title={title} subtitle={subtitle} />
       <div
         className="

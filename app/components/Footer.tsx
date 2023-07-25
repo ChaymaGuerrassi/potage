@@ -4,7 +4,7 @@ import { BsFacebook, BsGithub, BsLinkedin } from "react-icons/bs";
 
 export default function Footer() {
   return (
-    <footer className={`bg-ptgBeige text-ptgGrey border-t-2 border-ptgGrey `}>
+    <footer className={`bg-ptgBeige text-ptgGrey border-t-2 border-ptgGrey`}>
       <div
         className={`px-6 lg:px-20 lg:pt-14 lg:pb-8 py-9 flex flex-col lg:flex-row justify-between gap-9 lg:gap-0`}
       >

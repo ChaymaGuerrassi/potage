@@ -25,7 +25,7 @@ export default async function Home() {
     return (
       <EmptyState
         title="Vous n'avez pas encore reçu de demandes d'achat ! "
-        subtitle="Gambatte !"
+        subtitle="Vous trouverez ici les demandes d'achat de vos annonce"
       />
     );
   }

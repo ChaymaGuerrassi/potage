@@ -15,11 +15,19 @@ const ProfilPic: React.FC<ProfilPicProps> = ({ currentUser, showMenu, large }) =
   const [profilMenu, setProfilMenu] = useState(false);
   const router = useRouter();
 
+
+  const handleProfilClick = () => {
+    if (!showMenu) {
+      router.push(`/profile/${currentUser.id}`);
+    } else {
+      setProfilMenu(!profilMenu);
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center lg:block">
       <div
         className={`rounded-full border-2 w-[52px] h-[52px] ${large && "w-20 h-20" } border-ptgGrey leading-none bg-slate-300 flex items-center justify-center relative cursor-pointer`}
-        onClick={() => setProfilMenu(!profilMenu)}
+        onClick={handleProfilClick}
       >
         {currentUser && currentUser.image !== null ? (
           <Image

@@ -43,6 +43,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
   disabled,
   actionLabel,
   sellerSide,
+  currentUser,
   sellerSideStatus,
   secondaryActionLabel,
   actionId = "",
@@ -144,7 +145,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
             <div className="font-bold">{data.price} €</div>
           </div>
           <div className="flex gap-2 mt-4">
-            {sellerSideStatus !== "PENDING" && announceType !== "offer" && (
+            {sellerSideStatus !== "PENDING" && announceType !== "offer" || announceType !== "seller" && currentUser && (
               <div
                 className={`font-bold ${
                   sellerSideStatus === "ACCEPTED"
@@ -157,7 +158,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
             )}
             {(sellerSideStatus === "PENDING" || !sellerSideStatus) &&
               onSecondaryAction &&
-              secondaryActionLabel && (
+              secondaryActionLabel && currentUser && currentUser.id !== data.sellerId && (
                 <Button
                   disabled={disabled}
                   value={sellerSide ? secondaryActionLabel : ""}
@@ -175,7 +176,7 @@ const AnnounceCard: React.FC<AnnounceCardProps> = ({
               )}
             {(sellerSideStatus === "PENDING" || !sellerSideStatus) &&
               onAction &&
-              actionLabel && (
+              actionLabel && currentUser && currentUser.id !== data.sellerId && (
                 <Button
                   disabled={disabled}
                   value={actionLabel}
